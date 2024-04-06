@@ -100,20 +100,19 @@ const deleteUser = (req, res) => {
     message: 'This route is not been defined',
   });
 };
-// ROUTES
-app.route('/api/v1/tours').get(getAllTours).post(createTour);
-app
-  .route('/api/v1/tours/:id')
-  .get(getTour)
-  .patch(updateTour)
-  .delete(deleteTour);
 
-app.route('/api/v1/users').get(getAllUsers).post(createUser);
-app
-  .route('/api/v1/users/:id')
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+// ROUTES
+const tourRoutes = express.Router();
+const userRoutes = express.Router();
+
+tourRoutes.route('/').get(getAllTours).post(createTour);
+tourRoutes.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+
+userRoutes.route('/').get(getAllUsers).post(createUser);
+userRoutes.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
+
+app.use('/api/v1/tours', tourRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // SERVER START
 const port = '3000';
