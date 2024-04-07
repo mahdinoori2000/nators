@@ -10,6 +10,17 @@ exports.checkId = (req, res, next, val) => {
   }
   next();
 };
+
+exports.checkBody = (req, res, next) => {
+  if (!req.body.difficulty || !req.body.price) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid input of difficulty or price',
+    });
+  }
+  next();
+};
+
 exports.createTour = (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newId }, req.body);
