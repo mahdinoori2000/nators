@@ -2,13 +2,6 @@ const fs = require('fs');
 
 const Tour = require('../models/tourModel');
 
-// exports.checkId = (req, res, next, val) => {
-//   // if (val > tours.length) {
-//   //   return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
-//   // }
-//   // next();
-// };
-
 exports.createTour = async (req, res) => {
   try {
     const newTour = await Tour.create(req.body);
@@ -24,8 +17,13 @@ exports.createTour = async (req, res) => {
   }
 };
 
-exports.getAllTours = (req, res) => {
-  // res.status(200).json({ message: 'success', result: tours.length, tours });
+exports.getAllTours = async (req, res) => {
+  try {
+    const tours = await Tour.find();
+    res.status(200).json({ message: 'success', result: tours.length, tours });
+  } catch (err) {
+    res.status(404).json({ status: 'fail', message: err });
+  }
 };
 
 exports.getTour = (req, res) => {
