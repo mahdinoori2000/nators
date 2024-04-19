@@ -6,6 +6,24 @@ dotenv.config({ path: './config.env' });
 
 const DB = process.env.DATABASE_LOCAL;
 
+const tourSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Tour should have a name'],
+    unique: true,
+  },
+  rating: {
+    type: Number,
+    default: 4.8,
+  },
+  price: {
+    type: Number,
+    required: [true, 'Tour should have a price'],
+  },
+});
+
+const Tour = mongoose.model('Tour', tourSchema);
+
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
